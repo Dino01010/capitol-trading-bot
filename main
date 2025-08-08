@@ -1,0 +1,19 @@
+ from flask import Flask, request, jsonify
+import os
+
+app = Flask(__name__)
+
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    data = request.json
+    signal = data.get("signal")
+    symbol = data.get("symbol")
+    lot_size = data.get("lot_size")
+
+    # In real case, this is where you'd send order to Capital.com
+    print(f"Received signal: {signal}, Symbol: {symbol}, Lot size: {lot_size}")
+
+    return jsonify({"status": "received"}), 200
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
